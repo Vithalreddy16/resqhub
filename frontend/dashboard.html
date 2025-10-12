@@ -26,7 +26,18 @@
       --card-bg: #141414;
       --card-border: rgba(255, 255, 255, 0.08);
     }
+#profile-map {
+  height: 250px;
+  width: 100%;
+  z-index: 1;
+  background-color: #1a1a1a !important; /* Ensures visible base */
+}
 
+.leaflet-container {
+  background: #1a1a1a !important;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 75, 75, 0.2);
+}
     body {
       background: var(--bg-dark);
       color: var(--text-light);
