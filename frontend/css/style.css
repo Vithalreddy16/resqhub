@@ -2,6 +2,21 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+/* --- NEW: Unified Color Palette --- */
+:root {
+    --primary-red: #E50000;      /* The main, vibrant red for buttons, borders, and highlights */
+    --bright-red: #FF2D2D;      /* A brighter red for links and hover effects */
+    --dark-red: #B20000;        /* A darker red for active states or deep borders */
+    --glow-red: rgba(229, 0, 0, 0.5); /* A translucent red for glow effects */
+    --grid-red: rgba(229, 0, 0, 0.1); /* A very faint red for the background grid */
+    
+    --main-black: #000000;
+    --dark-grey: #1a1a1a;
+    --medium-grey: #333333;
+    --light-grey: #cccccc;
+    --text-grey: #ced4da;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -11,162 +26,144 @@ body {
     min-height: 100vh;
 }
 
-/* 1. New Red Grid Background on Black */
+/* 1. Red Grid Background on Black */
 .bg-dark-gradient {
-    color: #cccccc; /* Light grey text for readability */
-    background-color: #0a0a0a; /* Base black color */
+    color: var(--light-grey);
+    background-color: var(--dark-grey);
     background-image:
-        linear-gradient(rgba(255, 0, 0, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 0, 0.15) 1px, transparent 1px);
-    background-size: 35px 35px; /* Size of the grid squares */
+        linear-gradient(var(--grid-red) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-red) 1px, transparent 1px);
+    background-size: 35px 35px;
 }
 
-/* 2. Override Bootstrap's Default Colors to fit the new theme */
-:root {
-    --bs-primary: #dc3545;
-    --bs-secondary: #6c757d;
-    --bs-success: #198754;
-    --bs-info: #6c757d; /* Changed from blue to grey */
-    --bs-warning: #dc3545; /* Changed from yellow to red */
-    --bs-danger: #dc3545;
-    --bs-light: #f8f9fa;
-    --bs-dark: #000000; /* Changed to pure black */
+/* 2. Overriding Bootstrap Colors with our Palette */
+.btn-primary, .btn-danger {
+    background-color: var(--primary-red);
+    border-color: var(--dark-red);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover, .btn-danger:hover {
+    background-color: var(--dark-red);
+    border-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--glow-red);
+}
+.btn-outline-light {
+    border-color: var(--light-grey);
+    color: var(--light-grey);
+}
+.btn-outline-light:hover {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: white;
 }
 
 /* 3. General Link Styling */
 a {
-    color: #ff4d4d; /* Brighter red for links */
+    color: var(--bright-red);
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 a:hover {
-    color: #ff0000; /* Pure red on hover */
+    color: var(--light-grey);
+    text-decoration: none;
 }
 
 /* --- HEADER & FOOTER STYLES --- */
 header, footer {
-    background-color: #000000 !important; /* Make header/footer solid black */
-    border-bottom: 1px solid #dc3545;
+    background-color: var(--main-black) !important;
+    border-bottom: 2px solid var(--primary-red);
+    box-shadow: 0 4px 15px var(--glow-red);
 }
 footer {
     border-bottom: none;
-    border-top: 1px solid #dc3545;
+    border-top: 2px solid var(--primary-red);
 }
-header h1, footer p {
-    margin: 0;
+
+/* --- NEW: Logo Icon Styling --- */
+.logo-icon {
+    margin-right: 15px;
+    color: var(--primary-red);
+    text-shadow: 0 0 10px var(--glow-red);
+    transition: transform 0.3s ease;
 }
-header i {
-    margin-right: 10px;
+.logo-icon-nav {
+    color: white;
 }
-.container {
-    flex-grow: 1;
+header a:hover .logo-icon {
+    transform: rotate(15deg) scale(1.1);
 }
 
 /* --- INTERACTIVE & ANIMATED ELEMENTS --- */
 .card {
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--medium-grey);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(255,0,0,0.2) !important;
+    border-color: var(--primary-red);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+h1, h2, h3, h5 {
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+.card-title {
+    color: var(--primary-red) !important;
+    text-shadow: 0 0 8px var(--glow-red);
 }
 
-@keyframes pulse-red {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+/* --- FORM STYLING --- */
+.form-label { color: var(--text-grey); }
+.form-control {
+    background-color: var(--dark-grey);
+    border: 1px solid var(--medium-grey);
+    color: white;
+    transition: all 0.3s ease;
 }
+.form-control::placeholder { color: #888; }
+.form-control:focus {
+    background-color: var(--main-black);
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 0.25rem var(--glow-red);
+    color: white;
+}
+.card p, .card .form-text { color: var(--text-grey); }
 
-#alerts-count:not(:empty):not(.badge-0) {
-    animation: pulse-red 2s infinite;
-}
-.badge-0 {
-    animation: none !important;
-}
-
-/* --- DARK THEME ADAPTATIONS --- */
-.bg-dark-gradient h1, .bg-dark-gradient h2, .bg-dark-gradient h3, .bg-dark-gradient h5 {
-    color: #ffffff;
-}
-.bg-dark-gradient .card {
-    background-color: #000000; /* Black card background */
-    border: 1px solid #dc3545; /* Red border */
-    box-shadow: 0 0 15px rgba(220, 53, 69, 0.2);
-}
-.bg-dark-gradient .card .form-label {
-    color: #e9ecef;
-}
-.bg-dark-gradient .card .form-control {
-    background-color: #1a1a1a; /* Dark grey input fields */
-    border: 1px solid #444444; /* Grey border */
-    color: #ffffff;
-}
-.bg-dark-gradient .card .form-control::placeholder {
-    color: #888888;
-}
-.bg-dark-gradient .card .form-control:focus {
-    background-color: #2a2a2a;
-    border-color: #dc3545; /* Red focus border */
-    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.5); /* Red focus glow */
-    color: #ffffff;
-}
-.bg-dark-gradient .card p, .bg-dark-gradient .card .form-text {
-    color: #ced4da;
-}
-.bg-dark-gradient .card a {
-    color: #ff4d4d; /* Red links inside cards */
-    font-weight: bold;
-}
-/* This filter creates the dark mode map, which fits the theme */
+/* Inverted Map for Dark Theme */
 #map, #profile-map {
     filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    border-radius: 5px;
 }
 
 /* --- DASHBOARD-SPECIFIC STYLES --- */
 .dashboard-nav .list-group-item {
-    background-color: #1a1a1a;
-    color: #cccccc;
-    border-radius: 0;
-    border: 1px solid #444444;
+    background-color: var(--dark-grey);
+    color: var(--light-grey);
+    border: 1px solid var(--medium-grey);
     border-left: 5px solid transparent;
     transition: all 0.2s ease-in-out;
-    font-weight: 500;
 }
 .dashboard-nav .list-group-item.active {
-    background-color: #dc3545;
+    background-color: var(--primary-red);
     color: white;
-    border-color: #a71d2a;
+    border-color: var(--dark-red);
 }
 .dashboard-nav .list-group-item:hover:not(.active) {
-    background-color: #2a2a2a; /* Dark grey hover */
-    border-left-color: #dc3545; /* Red accent on hover */
+    background-color: var(--medium-grey);
+    border-left-color: var(--primary-red);
     transform: translateX(5px);
 }
-.dashboard-nav i.me-2 {
-    width: 20px;
-    text-align: center;
-}
-.list-group-item-warning {
-    border-left: 5px solid var(--bs-warning) !important;
-}
-
-/* Button overrides - already handled by :root variables */
-.btn-info {
-    background-color: var(--bs-secondary);
-    border-color: var(--bs-secondary);
-}
-.btn-info:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
-}
-
 
 /* --- CHATBOT STYLES --- */
 .chatbot-icon-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #dc3545;
-    color: white;
+    background-color: var(--primary-red);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -175,97 +172,64 @@ header i {
     align-items: center;
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(220,53,69,0.4);
+    box-shadow: 0 4px 12px var(--glow-red);
     transition: transform 0.2s ease-in-out;
 }
-.chatbot-icon-container:hover {
-    transform: scale(1.1);
-}
-.chatbot-icon-container img {
-    width: 36px;
-    height: 36px;
-}
+.chatbot-icon-container:hover { transform: scale(1.1); }
+.chatbot-icon-container img { width: 36px; height: 36px; }
+
 .chat-window-container {
     position: fixed;
     bottom: 90px;
     right: 20px;
     width: 350px;
-    max-width: 90%;
     height: 500px;
-    background-color: #111111; /* Dark chat window */
+    background-color: var(--dark-grey);
     border-radius: 15px;
-    border: 1px solid #dc3545;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid var(--primary-red);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
     z-index: 1000;
     display: none;
     flex-direction: column;
     overflow: hidden;
 }
 .chat-header {
-    background-color: #000000; /* Black header */
-    border-bottom: 1px solid #dc3545;
-    color: white;
+    background-color: var(--main-black);
+    border-bottom: 1px solid var(--primary-red);
+    color: var(--primary-red);
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.chat-header h5 {
-    margin: 0;
-    color: #dc3545; /* Red header text */
-}
 .chat-messages {
     flex-grow: 1;
     padding: 15px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.message {
-    padding: 10px 15px;
-    border-radius: 20px;
-    max-width: 80%;
-    line-height: 1.4;
 }
 .bot-message {
-    background-color: #333333; /* Grey bot message */
-    color: #cccccc;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
+    background-color: var(--medium-grey);
+    color: var(--light-grey);
 }
 .user-message {
-    background-color: #dc3545;
+    background-color: var(--primary-red);
     color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
 }
 .chat-input-area {
     padding: 10px;
-    border-top: 1px solid #444444;
-    background-color: #000000;
+    border-top: 1px solid var(--medium-grey);
+    background-color: var(--main-black);
 }
 #chat-form {
     display: flex;
-    border: 1px solid #444444;
+    border: 1px solid var(--medium-grey);
     border-radius: 20px;
-    padding: 5px;
 }
 #chat-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    padding: 5px 10px;
     background-color: transparent;
-    color: #cccccc; /* Grey input text */
+    color: var(--light-grey);
 }
 #chat-form button {
-    border: none;
-    background-color: #dc3545;
+    background-color: var(--primary-red);
     color: white;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    flex-shrink: 0;
 }
