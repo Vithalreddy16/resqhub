@@ -2,17 +2,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* --- NEW: Unified Color Palette --- */
+/* --- Unified Color Palette --- */
 :root {
-    --primary-red: #E50000;      /* The main, vibrant red for buttons, borders, and highlights */
-    --bright-red: #FF2D2D;      /* A brighter red for links and hover effects */
-    --dark-red: #B20000;        /* A darker red for active states or deep borders */
-    --glow-red: rgba(229, 0, 0, 0.5); /* A translucent red for glow effects */
-    --grid-red: rgba(229, 0, 0, 0.1); /* A very faint red for the background grid */
+    --primary-red: #E50000;      /* Main, vibrant red */
+    --bright-red: #FF2D2D;      /* Brighter red for links/hover */
+    --dark-red: #B20000;        /* Darker red for active states/deep borders */
+    --glow-red: rgba(229, 0, 0, 0.4); /* Translucent red for glow effects */
+    --grid-line-color: rgba(229, 0, 0, 0.1); /* Very faint red for grid lines */
     
     --main-black: #000000;
-    --dark-grey: #1a1a1a;
-    --medium-grey: #333333;
+    --dark-grey: #121212;       /* Slightly lighter than pure black for depth */
+    --medium-grey: #2a2a2a;     /* For card backgrounds, input fields */
     --light-grey: #cccccc;
     --text-grey: #ced4da;
 }
@@ -24,23 +24,32 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll due to background animation */
 }
 
-/* 1. Red Grid Background on Black */
+/* --- Animated Red Grid Background --- */
+@keyframes grid-pan {
+    0% { background-position: 0 0; }
+    100% { background-position: 35px 35px; } /* Same as background-size */
+}
+
 .bg-dark-gradient {
     color: var(--light-grey);
     background-color: var(--dark-grey);
     background-image:
-        linear-gradient(var(--grid-red) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-red) 1px, transparent 1px);
+        linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
     background-size: 35px 35px;
+    animation: grid-pan 120s linear infinite; /* Slow, continuous animation */
 }
 
-/* 2. Overriding Bootstrap Colors with our Palette */
+/* Overriding Bootstrap Colors with our Palette */
 .btn-primary, .btn-danger {
     background-color: var(--primary-red);
     border-color: var(--dark-red);
     transition: all 0.3s ease;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 .btn-primary:hover, .btn-danger:hover {
     background-color: var(--dark-red);
@@ -51,14 +60,38 @@ body {
 .btn-outline-light {
     border-color: var(--light-grey);
     color: var(--light-grey);
+    transition: all 0.3s ease;
 }
 .btn-outline-light:hover {
     background-color: var(--primary-red);
     border-color: var(--primary-red);
     color: white;
+    box-shadow: 0 2px 10px var(--glow-red);
+}
+.btn-dark {
+    background-color: var(--main-black);
+    border-color: var(--medium-grey);
+    color: var(--light-grey);
+    transition: all 0.3s ease;
+}
+.btn-dark:hover {
+    background-color: var(--medium-grey);
+    border-color: var(--primary-red);
+    color: var(--bright-red);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.btn-outline-secondary {
+    color: var(--text-grey);
+    border-color: #555555;
+}
+.btn-outline-secondary:hover {
+    background-color: var(--medium-grey);
+    color: white;
+    border-color: var(--primary-red);
 }
 
-/* 3. General Link Styling */
+
+/* General Link Styling */
 a {
     color: var(--bright-red);
     text-decoration: none;
@@ -73,58 +106,65 @@ a:hover {
 header, footer {
     background-color: var(--main-black) !important;
     border-bottom: 2px solid var(--primary-red);
-    box-shadow: 0 4px 15px var(--glow-red);
+    box-shadow: 0 4px 20px var(--glow-red);
+    position: relative; /* For z-index to work */
+    z-index: 10;
 }
 footer {
     border-bottom: none;
     border-top: 2px solid var(--primary-red);
 }
 
-/* --- NEW: Logo Icon Styling --- */
-.logo-icon {
-    margin-right: 15px;
-    color: var(--primary-red);
-    text-shadow: 0 0 10px var(--glow-red);
+/* --- Image Logo Styling --- */
+.app-logo {
+    height: 40px;
+    width: auto;
     transition: transform 0.3s ease;
 }
-.logo-icon-nav {
-    color: white;
+.app-logo-sm {
+    height: 30px;
+    width: auto;
 }
-header a:hover .logo-icon {
-    transform: rotate(15deg) scale(1.1);
+header a:hover .app-logo {
+    transform: scale(1.1) rotate(5deg);
+}
+.navbar-brand .app-logo-sm {
+    filter: drop-shadow(0 0 5px var(--glow-red));
 }
 
 /* --- INTERACTIVE & ANIMATED ELEMENTS --- */
 .card {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     border: 1px solid var(--medium-grey);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card:hover {
     transform: translateY(-5px);
     border-color: var(--primary-red);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 h1, h2, h3, h5 {
     color: white;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 .card-title {
-    color: var(--primary-red) !important;
-    text-shadow: 0 0 8px var(--glow-red);
+    color: var(--bright-red) !important;
+    text-shadow: 0 0 10px var(--glow-red);
+    font-weight: 700;
 }
 
 /* --- FORM STYLING --- */
 .form-label { color: var(--text-grey); }
 .form-control {
-    background-color: var(--dark-grey);
-    border: 1px solid var(--medium-grey);
+    background-color: var(--medium-grey);
+    border: 1px solid #555555;
     color: white;
     transition: all 0.3s ease;
 }
-.form-control::placeholder { color: #888; }
+.form-control::placeholder { color: #aaaaaa; }
 .form-control:focus {
     background-color: var(--main-black);
     border-color: var(--primary-red);
@@ -136,26 +176,60 @@ h1, h2, h3, h5 {
 /* Inverted Map for Dark Theme */
 #map, #profile-map {
     filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-    border-radius: 5px;
+    border-radius: 8px;
+    border: 1px solid var(--medium-grey);
 }
 
 /* --- DASHBOARD-SPECIFIC STYLES --- */
 .dashboard-nav .list-group-item {
-    background-color: var(--dark-grey);
+    background-color: var(--medium-grey);
     color: var(--light-grey);
-    border: 1px solid var(--medium-grey);
+    border: 1px solid #555555;
     border-left: 5px solid transparent;
     transition: all 0.2s ease-in-out;
+    border-radius: 0;
 }
 .dashboard-nav .list-group-item.active {
     background-color: var(--primary-red);
     color: white;
     border-color: var(--dark-red);
+    font-weight: bold;
 }
 .dashboard-nav .list-group-item:hover:not(.active) {
-    background-color: var(--medium-grey);
-    border-left-color: var(--primary-red);
+    background-color: var(--dark-grey);
+    border-left-color: var(--bright-red);
     transform: translateX(5px);
+}
+.p-4.mb-4.bg-white { /* Welcome card on dashboard */
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    border: 1px solid var(--medium-grey);
+    border-left: 5px solid var(--primary-red) !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    border-radius: 10px;
+}
+.p-4.mb-4.bg-white h2, .p-4.mb-4.bg-white p {
+    color: white !important;
+}
+.p-4.mb-4.bg-white .text-danger {
+    color: var(--bright-red) !important;
+    text-shadow: 0 0 8px var(--glow-red);
+}
+
+
+/* Pulse animation for alerts badge */
+@keyframes pulse-red {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 0, 0, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(229, 0, 0, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 0, 0, 0); }
+}
+
+#alerts-count:not(:empty):not(.badge-0) {
+    animation: pulse-red 2s infinite;
+    background-color: var(--primary-red) !important;
+}
+.badge-0 {
+    animation: none !important;
+    background-color: var(--medium-grey) !important;
 }
 
 /* --- CHATBOT STYLES --- */
@@ -183,11 +257,12 @@ h1, h2, h3, h5 {
     bottom: 90px;
     right: 20px;
     width: 350px;
+    max-width: 90%;
     height: 500px;
     background-color: var(--dark-grey);
     border-radius: 15px;
     border: 1px solid var(--primary-red);
-    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.7);
     z-index: 1000;
     display: none;
     flex-direction: column;
@@ -196,24 +271,40 @@ h1, h2, h3, h5 {
 .chat-header {
     background-color: var(--main-black);
     border-bottom: 1px solid var(--primary-red);
-    color: var(--primary-red);
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+.chat-header h5 {
+    color: var(--primary-red);
+    margin: 0;
+}
 .chat-messages {
     flex-grow: 1;
     padding: 15px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.message {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 80%;
+    line-height: 1.4;
 }
 .bot-message {
     background-color: var(--medium-grey);
     color: var(--light-grey);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
 }
 .user-message {
     background-color: var(--primary-red);
     color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
 }
 .chat-input-area {
     padding: 10px;
@@ -224,12 +315,23 @@ h1, h2, h3, h5 {
     display: flex;
     border: 1px solid var(--medium-grey);
     border-radius: 20px;
+    padding: 5px;
 }
 #chat-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
     background-color: transparent;
     color: var(--light-grey);
 }
 #chat-form button {
+    border: none;
     background-color: var(--primary-red);
     color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
