@@ -11,34 +11,45 @@ body {
     min-height: 100vh;
 }
 
-/* 1. New Dark Gradient Background */
+/* 1. New Red Grid Background on Black */
 .bg-dark-gradient {
-    background-color:#1a1a1a;
-    background-image:  radial-gradient(circle at center, #ff4d4d 0%, #ff0000 50%, #800000 100%);
-    color: #f8f9fa;
+    color: #cccccc; /* Light grey text for readability */
+    background-color: #0a0a0a; /* Base black color */
+    background-image:
+        linear-gradient(rgba(255, 0, 0, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.15) 1px, transparent 1px);
+    background-size: 35px 35px; /* Size of the grid squares */
 }
 
-/* 2. Override Bootstrap's Default Colors */
+/* 2. Override Bootstrap's Default Colors to fit the new theme */
 :root {
     --bs-primary: #dc3545;
     --bs-secondary: #6c757d;
     --bs-success: #198754;
-    --bs-info: #0dcaf0;
-    --bs-warning: #ffc107;
+    --bs-info: #6c757d; /* Changed from blue to grey */
+    --bs-warning: #dc3545; /* Changed from yellow to red */
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
-    --bs-dark: #212529;
+    --bs-dark: #000000; /* Changed to pure black */
 }
 
 /* 3. General Link Styling */
 a {
-    color: #bb2d3b;
+    color: #ff4d4d; /* Brighter red for links */
 }
 a:hover {
-    color: #6a1a22;
+    color: #ff0000; /* Pure red on hover */
 }
 
 /* --- HEADER & FOOTER STYLES --- */
+header, footer {
+    background-color: #000000 !important; /* Make header/footer solid black */
+    border-bottom: 1px solid #dc3545;
+}
+footer {
+    border-bottom: none;
+    border-top: 1px solid #dc3545;
+}
 header h1, footer p {
     margin: 0;
 }
@@ -56,7 +67,7 @@ header i {
 }
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 8px 25px rgba(255,0,0,0.2) !important;
 }
 
 @keyframes pulse-red {
@@ -77,42 +88,45 @@ header i {
     color: #ffffff;
 }
 .bg-dark-gradient .card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: #000000; /* Black card background */
+    border: 1px solid #dc3545; /* Red border */
+    box-shadow: 0 0 15px rgba(220, 53, 69, 0.2);
 }
 .bg-dark-gradient .card .form-label {
     color: #e9ecef;
 }
 .bg-dark-gradient .card .form-control {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: #1a1a1a; /* Dark grey input fields */
+    border: 1px solid #444444; /* Grey border */
     color: #ffffff;
 }
 .bg-dark-gradient .card .form-control::placeholder {
-    color: #adb5bd;
+    color: #888888;
 }
 .bg-dark-gradient .card .form-control:focus {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-color: #ffc107;
-    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    background-color: #2a2a2a;
+    border-color: #dc3545; /* Red focus border */
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.5); /* Red focus glow */
     color: #ffffff;
 }
 .bg-dark-gradient .card p, .bg-dark-gradient .card .form-text {
     color: #ced4da;
 }
 .bg-dark-gradient .card a {
-    color: #ffc107;
+    color: #ff4d4d; /* Red links inside cards */
     font-weight: bold;
 }
-#map {
+/* This filter creates the dark mode map, which fits the theme */
+#map, #profile-map {
     filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
 /* --- DASHBOARD-SPECIFIC STYLES --- */
 .dashboard-nav .list-group-item {
+    background-color: #1a1a1a;
+    color: #cccccc;
     border-radius: 0;
+    border: 1px solid #444444;
     border-left: 5px solid transparent;
     transition: all 0.2s ease-in-out;
     font-weight: 500;
@@ -123,8 +137,8 @@ header i {
     border-color: #a71d2a;
 }
 .dashboard-nav .list-group-item:hover:not(.active) {
-    background-color: #f1f1f1;
-    border-left-color: #ccc;
+    background-color: #2a2a2a; /* Dark grey hover */
+    border-left-color: #dc3545; /* Red accent on hover */
     transform: translateX(5px);
 }
 .dashboard-nav i.me-2 {
@@ -134,14 +148,17 @@ header i {
 .list-group-item-warning {
     border-left: 5px solid var(--bs-warning) !important;
 }
+
+/* Button overrides - already handled by :root variables */
 .btn-info {
-    background-color: #5bc0de;
-    border-color: #46b8da;
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
 }
 .btn-info:hover {
-    background-color: #31b0d5;
-    border-color: #269abc;
+    background-color: #5a6268;
+    border-color: #545b62;
 }
+
 
 /* --- CHATBOT STYLES --- */
 .chatbot-icon-container {
@@ -158,7 +175,7 @@ header i {
     align-items: center;
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(220,53,69,0.4);
     transition: transform 0.2s ease-in-out;
 }
 .chatbot-icon-container:hover {
@@ -175,8 +192,9 @@ header i {
     width: 350px;
     max-width: 90%;
     height: 500px;
-    background-color: white;
+    background-color: #111111; /* Dark chat window */
     border-radius: 15px;
+    border: 1px solid #dc3545;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     z-index: 1000;
     display: none;
@@ -184,7 +202,8 @@ header i {
     overflow: hidden;
 }
 .chat-header {
-    background-color: #dc3545;
+    background-color: #000000; /* Black header */
+    border-bottom: 1px solid #dc3545;
     color: white;
     padding: 15px;
     display: flex;
@@ -193,6 +212,7 @@ header i {
 }
 .chat-header h5 {
     margin: 0;
+    color: #dc3545; /* Red header text */
 }
 .chat-messages {
     flex-grow: 1;
@@ -209,8 +229,8 @@ header i {
     line-height: 1.4;
 }
 .bot-message {
-    background-color: #e9ecef;
-    color: #212529;
+    background-color: #333333; /* Grey bot message */
+    color: #cccccc;
     align-self: flex-start;
     border-bottom-left-radius: 5px;
 }
@@ -222,11 +242,12 @@ header i {
 }
 .chat-input-area {
     padding: 10px;
-    border-top: 1px solid #dee2e6;
+    border-top: 1px solid #444444;
+    background-color: #000000;
 }
 #chat-form {
     display: flex;
-    border: 1px solid #ccc;
+    border: 1px solid #444444;
     border-radius: 20px;
     padding: 5px;
 }
@@ -236,6 +257,7 @@ header i {
     outline: none;
     padding: 5px 10px;
     background-color: transparent;
+    color: #cccccc; /* Grey input text */
 }
 #chat-form button {
     border: none;
